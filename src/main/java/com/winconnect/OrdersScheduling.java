@@ -114,7 +114,6 @@ ClientTypedropdownvalue.click();;
 
     public void clientContactdropdwon() {
         clientContact.click();
-        selectclientcontact.click();
     }
 
     public void clickSaveAndContinue() {

@@ -1,13 +1,14 @@
-package com.winconnect;
+package com.winconnect.orderScheduling;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
 
-public class OrdersScheduling 
+import static com.winconnect.Baseclass.waitAfterAction;
+
+public class ClientTab 
 {
    WebDriver driver;
 
@@ -23,7 +24,7 @@ public class OrdersScheduling
     private WebElement clientContact;
 
     @FindBy(xpath = "//div[@class='flex items-center space-x-3 px-3 py-2 cursor-pointer border-b border-gray-100 transition-colors hover:primary/10'][2]")
-    private Select selectclientcontact;
+    private WebElement selectclientcontact;
 
     @FindBy(xpath="//button[normalize-space()='Save and Continue to Next Step']")
     private WebElement saveandcontinue;
@@ -31,38 +32,8 @@ public class OrdersScheduling
     @FindBy(xpath="//button[normalize-space()='Cancel']")
     private WebElement cancelButton;
 
-
-    // Property Details Tab 
-
-    @FindBy(xpath="//input[@placeholder='Search address to see suggestions, or fill out the form manually']")
-    private WebElement SearchpropertyAddress;
-
-    @FindBy(xpath="//span[normalize-space()='Cannery Row, Monterey, CA, USA']")
-    private WebElement selectpropertyaddress;
-
-    @FindBy(xpath="//button[normalize-space()='Create Address Manually']")
-    private WebElement createAddressManuallyButton;
-
-    @FindBy(xpath="//input[@id='addressLine1']")
-    private WebElement addressLine1Input1;
-
-   @FindBy(xpath="//input[@id='city']")
-    private WebElement cityInput;
-
-    @FindBy(xpath="")
-    private WebElement stateInput;
-
-    @FindBy(xpath="//input[@id='zipCode']")
-    private WebElement zipCodeInput;
-
-    @FindBy(xpath="//input[@id='country']") 
-    private WebElement countryInput;
-
-    @FindBy(xpath="//input[@id='propertyPurchasePrice']")
-    private WebElement propertyPurchase;
-
-    @FindBy(xpath="//button[normalize-space()='Save Address']")
-    private WebElement saveAdress;
+     @FindBy(xpath="//tbody/tr[4]//button[2]")
+    private WebElement Editorderbutton;
 
 
 
@@ -70,26 +41,15 @@ public class OrdersScheduling
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-    public OrdersScheduling(WebDriver driver) {
+    public ClientTab(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
     public void clickCreateOrderButton() {
+         waitAfterAction(5000);
         createOrderButton.click();
     }
-
     public void clientTypeDropdown() {
         clientTypeDropdown.click();
          // Assuming dropdownElement is your <select> WebElement
@@ -114,6 +74,8 @@ ClientTypedropdownvalue.click();;
 
     public void clientContactdropdwon() {
         clientContact.click();
+        selectclientcontact.click();
+
     }
 
     public void clickSaveAndContinue() {
@@ -129,29 +91,9 @@ ClientTypedropdownvalue.click();;
         cancelButton.click();
     }       
 
-    public void clickSelectPropertyAddress() {
-        SearchpropertyAddress.sendKeys("cannery");
-        selectpropertyaddress.click();
+    public void Editorderbutton() {
+        Editorderbutton.click();
     }
-
-    public void clickCreateAddressManuallyButton() {
-        createAddressManuallyButton.click();
-    }
-    public void enterPropertyDetails(String addressLine1, String city,  String zipCode,  String purchasePrice) {
-        addressLine1Input1.sendKeys("123 Main Street");
-        cityInput.sendKeys("Chicago");
-       // stateInput.sendKeys(state);
-        zipCodeInput.sendKeys("60601");
-      //  countryInput.sendKeys(country);
-        propertyPurchase.sendKeys("100000");
-        saveAdress.click();
-    }
-
-
-    
-    
-
-   
 
     
 

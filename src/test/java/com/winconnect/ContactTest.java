@@ -1,10 +1,12 @@
-package com.winconnect.contact;
+package com.winconnect;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.winconnect.Baseclass;
 import com.winconnect.Homescreen;
+import com.winconnect.Contacts.ContactActions;
+import com.winconnect.Contacts.ContactPage;
 
 public class ContactTest extends Baseclass {
 

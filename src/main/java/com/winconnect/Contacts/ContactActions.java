@@ -1,4 +1,4 @@
-package com.winconnect.contact;
+package com.winconnect.Contacts;
 
 import static com.winconnect.Baseclass.waitAfterAction;
 

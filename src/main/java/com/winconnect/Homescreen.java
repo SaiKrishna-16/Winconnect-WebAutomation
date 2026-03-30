@@ -17,8 +17,13 @@ public class Homescreen extends Baseclass
     @FindBy(xpath = "//span[normalize-space()='Orders & Scheduling']")
     private WebElement ordersScheduling;
 
+
     @FindBy(xpath = "(//button[@role='combobox'])[1]")
     private WebElement clientTypeDropdown;
+
+
+    @FindBy(xpath="//span[normalize-space()='Accounts & Contacts']")
+    private WebElement accountsandcontacts;
 
     public Homescreen(WebDriver driver) {
         this.driver = driver;
@@ -35,5 +40,9 @@ public class Homescreen extends Baseclass
 
     public void selectClientType(String clientType) {
         clientTypeDropdown.sendKeys(clientType);
+    }
+
+    public void clickAccountsAndContacts() {
+        accountsandcontacts.click();
     }
 }

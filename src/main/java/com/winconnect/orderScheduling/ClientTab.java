@@ -52,9 +52,7 @@ public class ClientTab
     }
     public void clientTypeDropdown() {
         clientTypeDropdown.click();
-         // Assuming dropdownElement is your <select> WebElement
-         // XPATH = "//select//option[@value='BUYER']";
-
+         
          try {
              Thread.sleep(1000); // Pause for 2 seconds to allow dropdown to render
          } catch (InterruptedException e) {

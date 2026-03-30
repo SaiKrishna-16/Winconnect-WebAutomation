@@ -3,8 +3,6 @@ package com.winconnect;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.winconnect.Baseclass;
-import com.winconnect.Homescreen;
 import com.winconnect.Contacts.ContactActions;
 import com.winconnect.Contacts.ContactPage;
 
@@ -23,6 +21,7 @@ public class ContactTest extends Baseclass {
         Homescreen homeScreen = new Homescreen(driver);
         homeScreen.clickExpandOption(); 
          waitAfterAction(1000);
+
         homeScreen.clickAccountsAndContacts();
          waitAfterAction(1000);
        

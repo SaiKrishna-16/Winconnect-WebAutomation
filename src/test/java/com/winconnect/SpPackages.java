@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
@@ -102,6 +103,7 @@ public void preConditionFlow() {
 }
    
 
+
 /**
  * Test Case 1:
  * Validate Fixed Discount Calculation
@@ -118,11 +120,14 @@ public void preConditionFlow() {
  *
  * Expected Result:
  * Popup price and table price should match exactly
- */
+  * @throws InterruptedException 
+  */
+ 
+ 
+ @Test(priority = 1)
+ public void totalPriceValidationFixedDiscount() throws InterruptedException {
 
-
-@Test(priority = 1)
-public void totalPriceValidationFixedDiscount() {
+    Thread.sleep(5000);
 
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 
@@ -159,7 +164,7 @@ public void totalPriceValidationFixedDiscount() {
 
     ((JavascriptExecutor) driver).executeScript(
             "const element = arguments[0];" +
-                    "const value = '87';" +
+                    "const value = '54';" +
                     "const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
                     "nativeInputValueSetter.call(element, value);" +
                     "element.dispatchEvent(new Event('input', { bubbles: true }));",
@@ -240,11 +245,14 @@ public void totalPriceValidationFixedDiscount() {
  *
  * Expected Result:
  * Popup price and table price should be the same
- */
+  * @throws InterruptedException 
+  */
+ 
+ 
+ @Test(priority = 2)
+ public void totalPriceValidationPercentage() throws InterruptedException {
 
-
-@Test(priority = 2)
-public void totalPriceValidationPercentage() {
+    Thread.sleep(5000);
 
     By editBtnLocator = By.xpath("(//span[@data-state='closed']/child::button)[3]");
 
@@ -281,7 +289,7 @@ public void totalPriceValidationPercentage() {
 
     ((JavascriptExecutor) driver).executeScript(
             "const element = arguments[0];" +
-                    "const value = '73';" +
+                    "const value = '65';" +
                     "const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
                     "nativeInputValueSetter.call(element, value);" +
                     "element.dispatchEvent(new Event('input', { bubbles: true }));",
@@ -388,137 +396,79 @@ public void totalPriceValidationPercentage() {
  *
  * Expected Result:
  * Popup price and table price should be equal
- */
+      * @throws InterruptedException 
+  */
+ 
+ 
+   
+     @Test(priority = 3)
+     public void totalPriceValidationNone() throws InterruptedException {
 
+        Thread.sleep(5000);
 
-  
-    @Test(priority = 3)
-    public void totalPriceValidationNone() {
-    
-        By editBtnLocator = By.xpath("(//span[@data-state='closed']/child::button)[5]");
-        By manualDiscountFieldLocator = By.xpath("(//input[@type='number'])");
-    
-        // Wait overlay disappear
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//div[@data-state='open' and contains(@class,'fixed')]")));
-    
-        // ---------- CLICK EDIT ----------
+        By popupPriceLocator = By.xpath("//td[contains(@class,'font-bold')]");
+        By overlayLocator = By.xpath("//div[@data-state='open']");
+
+        // ------------------ DYNAMIC EDIT BUTTON ------------------
+        By packageNameLocator = By.xpath("//div[text()='Essential']");
+        String packageName = wait.until(ExpectedConditions.visibilityOfElementLocated(packageNameLocator)).getText();
+
+        By editBtnLocator = By.xpath("//div[text()='"+packageName+"']/ancestor::tr//span[@data-state='closed']/child::button");
         WebElement editBtn = wait.until(ExpectedConditions.elementToBeClickable(editBtnLocator));
         editBtn.click();
-    
-        // ---------- GET PACKAGE NAME ----------
-        By packageNameLocator = By.xpath("(//button[@data-testid='package-form-name-trigger']/descendant::span)[2]");
-    
-        String packageName = wait.until(
-                ExpectedConditions.visibilityOfElementLocated(packageNameLocator)).getText();
-    
-        // ---------- SELECT DISCOUNT DROPDOWN ----------
+
+        // SELECT NONE
         WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("(//button[@role='combobox'])[5]")));
         dropdown.click();
-    
-        // ---------- SELECT NONE ----------
         WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//div[@role='option'][.//span[text()='None']]")));
         option.click();
-    
-        // ---------- ENTER VALUES IN MULTIPLE FIELDS ----------
-        java.util.List<WebElement> manualDiscountFields = wait.until(
-                ExpectedConditions.visibilityOfAllElementsLocatedBy(manualDiscountFieldLocator));
-    
-        int value = 49;
-    
+
+        // ENTER VALUES IN MANUAL FIELDS
+        List<WebElement> manualDiscountFields = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
+                By.xpath("(//input[@type='number'])")));
+        int value = 37;
         for (WebElement field : manualDiscountFields) {
-    
             field.click();
             field.sendKeys(Keys.chord(Keys.COMMAND, "a"));
             field.sendKeys(String.valueOf(value));
             value++;
         }
-    
-        // ---------- WAIT FOR POPUP PRICE ----------
-        By popupPriceLocator = By.xpath("//td[contains(@class,'font-bold')]");
-    
-        String previous = "";
-        String current = "";
-    
-        for (int i = 0; i < 10; i++) {
-    
-            previous = driver.findElement(popupPriceLocator).getText();
-    
-            try { Thread.sleep(500); } catch (Exception e) {}
-    
-            current = driver.findElement(popupPriceLocator).getText();
-    
-            if (previous.equals(current)) {
-                break;
-            }
-        }
-    
-        String finalPrice = current;
-    
-        // ---------- CLICK UPDATE ----------
+
+    Thread.sleep(4000);
+       // WAIT UNTIL POPUP PRICE STABILIZES
+String finalPrice = wait.until(driver -> {
+    String prev = driver.findElement(popupPriceLocator).getText();
+    try { Thread.sleep(500); } catch (InterruptedException e) {}
+    String curr = driver.findElement(popupPriceLocator).getText();
+    if (prev.equals(curr)) return curr; // stable
+    else return null; // keep waiting
+});
+
         driver.findElement(By.xpath("//button[text()='Update Package']")).click();
-    
-        // ---------- WAIT POPUP CLOSE ----------
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(
-                By.xpath("//div[@data-state='open' and contains(@class,'fixed')]")));
-    
-        // ---------- GET TABLE PRICE USING PACKAGE NAME ----------
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(overlayLocator));
+
+        // GET TABLE PRICE
         By tablePriceLocator = By.xpath(
-                "//div[contains(text(),'" + packageName + "')]/ancestor::tr//span[contains(@class,'text-green-600')]"
-        );
-    
-        previous = "";
-        current = "";
-    
-        for (int i = 0; i < 10; i++) {
-    
-            previous = driver.findElement(tablePriceLocator).getText();
-    
-            try { Thread.sleep(500); } catch (Exception e) {}
-    
-            current = driver.findElement(tablePriceLocator).getText();
-    
-            if (previous.equals(current)) {
-                break;
-            }
-        }
-    
-        String totalPrice = current;
-    
-        // ---------- PRINT ----------
+                "//div[text()='"+packageName+"']/ancestor::tr//span[contains(@class,'text-green-600')]");
+        String totalPrice = wait.until(ExpectedConditions.visibilityOfElementLocated(tablePriceLocator)).getText();
+
         System.err.println("-------------- Test Case 3 -------------- ");
         System.out.println("Package Name : " + packageName);
         System.err.println("None Popup Price: " + finalPrice);
         System.err.println("None Table Price: " + totalPrice);
-    
-        // ---------- NORMALIZE ----------
+
         String normalizedPopup = finalPrice.replace("$", "").trim();
         String normalizedTable = totalPrice.replace("$", "").trim();
-    
-        if (normalizedPopup.endsWith(".00")) {
-            normalizedPopup = normalizedPopup.replace(".00", "");
-        }
-    
-        if (normalizedTable.endsWith(".00")) {
-            normalizedTable = normalizedTable.replace(".00", "");
-        }
-    
-        // ---------- VALIDATION ----------
-        try {
-    
-            Assert.assertEquals(normalizedTable, normalizedPopup);
-    
-            System.out.println("\u001B[32mNone Validation Passed\u001B[0m");
-    
-        } catch (AssertionError e) {
-    
-            System.out.println("\u001B[31mNone Validation Failed\u001B[0m");
-    
-            throw e;
-        }
+
+        if (normalizedPopup.endsWith(".00")) normalizedPopup = normalizedPopup.replace(".00", "");
+        if (normalizedTable.endsWith(".00")) normalizedTable = normalizedTable.replace(".00", "");
+
+        Assert.assertEquals(normalizedTable, normalizedPopup, "None Discount Validation Failed");
+        System.out.println("\u001B[32mNone Validation Passed\u001B[0m");
     }
+
 
 /**
  * Test Case 4:
@@ -536,14 +486,17 @@ public void totalPriceValidationPercentage() {
  *
  * Expected Result:
  * Updated package total price should match in popup and table
- */
+  * @throws InterruptedException 
+  */
+ 
+ 
+ @Test(priority = 4) //1979 - Ticket pending 
+ public void updatePackageWithServiceValidation() throws InterruptedException {
 
-
-@Test(priority = 4)
-public void updatePackageWithServiceValidation() {
+    Thread.sleep(5000);
 
     // Edit Package
-    By editBtnLocator = By.xpath("(//span[@data-state='closed']/child::button)[4]");
+    By editBtnLocator = By.xpath("(//span[@data-state='closed']/child::button)[8]");
     By packageNameLocator = By.xpath("(//button[@data-testid='package-form-name-trigger']/descendant::span)[2]");
 
     wait.until(ExpectedConditions.invisibilityOfElementLocated(
@@ -694,5 +647,190 @@ public void updatePackageWithServiceValidation() {
  * popup price and table price should match exactly.
  */
 
+@Test(priority = 5)
+public void createPackageWithServicesAndPercentageValidation() throws Exception {
+
+    String state = "AK";   // COMMON VARIABLE FOR STATE
+    String packageNameOption = "HMC Essential Plus";
+
+    // ---------- CLICK CREATE PACKAGE ----------
+    WebElement createPackageBtn = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//button[text()='Create Package']")));
+    createPackageBtn.click();
+
+    wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.xpath("//button[@data-testid='package-form-state-trigger']")));
+
+    // ---------- SELECT STATE IN POPUP ----------
+    WebElement stateDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//button[@data-testid='package-form-state-trigger']")));
+    stateDropdown.click();
+
+    WebElement stateOption = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//div[@role='option'][.//span[text()='" + state + "']]")));
+    stateOption.click();
+
+
+    // ---------- SELECT PACKAGE ----------
+    WebElement packageDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//button[@data-field='packageName']")));
+    packageDropdown.click();
+
+    WebElement packageOption = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//span[text()='"+packageNameOption +"']")));
+    packageOption.click();
+
+    By packageNameLocator = By.xpath("(//button[@data-testid='package-form-name-trigger']//span)[2]");
+    String packageName = wait.until(ExpectedConditions.visibilityOfElementLocated(packageNameLocator)).getText();
+
+
+    // ---------- DESCRIPTION ----------
+    WebElement description = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.xpath("//textarea[@name='description']")));
+
+    description.clear();
+    description.sendKeys("Includes all essential home inspection services to provide complete peace of mind to buyers.");
+
+
+    // ---------- ADD PRIMARY SERVICE ----------
+    WebElement primaryToggle = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//div[text()='Primary Service']/ancestor::div[contains(@class,'flex items-center justify-between')]//button[@data-testid='package-form-add-service-toggle']")));
+
+    primaryToggle.click();
+
+
+    // ---------- ADD 3 OTHER SERVICES ----------
+    List<WebElement> services = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+            By.xpath("//button[@data-testid='package-form-add-service-toggle']")));
+
+    int added = 0;
+
+    for (WebElement service : services) {
+
+        if (service.isDisplayed() && service.isEnabled()) {
+
+            service.click();
+            added++;
+
+            if (added == 3) {
+                break;
+            }
+        }
+    }
+
+
+    // ---------- SELECT DISCOUNT TYPE ----------
+    WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("(//button[@role='combobox'])[5]")));
+    dropdown.click();
+
+    WebElement option = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//div[@role='option'][.//span[text()='Percent']]")));
+    option.click();
+
+
+    // ---------- ENTER PERCENTAGE ----------
+    WebElement percentageField = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.xpath("//input[contains(@id,'form-item')]")));
+
+    percentageField.click();
+    percentageField.sendKeys(Keys.chord(Keys.COMMAND, "a"));
+
+    ((JavascriptExecutor) driver).executeScript(
+            "const element = arguments[0];" +
+                    "const value = '54';" +
+                    "const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
+                    "nativeInputValueSetter.call(element, value);" +
+                    "element.dispatchEvent(new Event('input', { bubbles: true }));",
+            percentageField
+    );
+
+
+    // ---------- WAIT FOR POPUP PRICE ----------
+    By popupPriceLocator = By.xpath("//td[contains(@class,'font-bold')]");
+
+    String previous = "";
+    String current = "";
+
+    for (int i = 0; i < 10; i++) {
+
+        previous = driver.findElement(popupPriceLocator).getText();
+        Thread.sleep(500);
+        current = driver.findElement(popupPriceLocator).getText();
+
+        if (previous.equals(current)) {
+            break;
+        }
+    }
+
+    String finalPrice = current;
+
+
+    // ---------- CLICK CREATE ----------
+    driver.findElement(By.xpath("//button[@form='package-form']")).click();
+
+
+    // ---------- VALIDATE PACKAGE CREATED ----------
+    WebElement toastMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(
+            By.xpath("//div[contains(text(),'created')]")));
+
+    Assert.assertTrue(toastMessage.isDisplayed(), "Package not created");
+
+
+    // ---------- WAIT POPUP CLOSE ----------
+    wait.until(ExpectedConditions.invisibilityOfElementLocated(
+            By.xpath("//div[@data-state='open' and contains(@class,'fixed')]")));
+
+
+    // ---------- APPLY STATE FILTER ----------
+    WebElement serviceStateFilterDropdown = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//button[@id='state-filter']")));
+    serviceStateFilterDropdown.click();
+
+    WebElement filterOption = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//div[@role='option'][.//span[text()='" + state + "']]")));
+    filterOption.click();
+
+
+    // ---------- FETCH TABLE PRICE USING PACKAGE NAME ----------
+    By tablePriceLocator = By.xpath(
+            "//div[contains(text(),'" + packageName + "')]/ancestor::tr//span[contains(@class,'text-lg font-semibold')]"
+    );
+
+    String totalPrice = wait.until(ExpectedConditions.visibilityOfElementLocated(tablePriceLocator)).getText();
+
+
+    // ---------- PRINT ----------
+    System.err.println("-------------- Test Case 5 -------------- ");
+    System.out.println("Package Name : " + packageName);
+    System.err.println("Popup Price: " + finalPrice);
+    System.err.println("Table Price: " + totalPrice);
+
+
+    // ---------- NORMALIZE ----------
+    String normalizedPopup = finalPrice.replace("$", "").trim();
+    String normalizedTable = totalPrice.replace("$", "").trim();
+
+    if (normalizedPopup.endsWith(".00")) {
+        normalizedPopup = normalizedPopup.replace(".00", "");
+    }
+
+    if (normalizedTable.endsWith(".00")) {
+        normalizedTable = normalizedTable.replace(".00", "");
+    }
+
+
+    // ---------- PRICE VALIDATION ----------
+    Assert.assertEquals(
+            normalizedTable,
+            normalizedPopup,
+            "Package created but pricing is not matching. Popup Price: "
+                    + normalizedPopup + " | Table Price: " + normalizedTable
+    );
+
+    System.out.println(" Package created and pricing matched successfully");
+}
 
 }
+
+

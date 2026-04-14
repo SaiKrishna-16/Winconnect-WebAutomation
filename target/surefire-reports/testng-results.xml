@@ -1,33 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
+<testng-results ignored="0" total="2" passed="1" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-03-30T17:06:00 IST" name="Surefire suite" finished-at="2026-03-30T17:06:21 IST" duration-ms="21293">
+  <suite started-at="2026-04-06T20:57:25 IST" name="Surefire suite" finished-at="2026-04-06T20:57:43 IST" duration-ms="17668">
     <groups>
     </groups>
-    <test started-at="2026-03-30T17:06:00 IST" name="Surefire test" finished-at="2026-03-30T17:06:21 IST" duration-ms="21293">
-      <class name="com.winconnect.ContactTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:com.winconnect.ContactTest@7f1302d6]" started-at="2026-03-30T17:06:00 IST" name="setup" finished-at="2026-03-30T17:06:11 IST" duration-ms="11855" status="PASS">
+    <test started-at="2026-04-06T20:57:25 IST" name="Surefire test" finished-at="2026-04-06T20:57:43 IST" duration-ms="17668">
+      <class name="com.winconnect.SPService">
+        <test-method is-config="true" signature="setup()[pri:0, instance:com.winconnect.SPService@159f197]" started-at="2026-04-06T20:57:21 IST" name="setup" finished-at="2026-04-06T20:57:25 IST" duration-ms="4557" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="testCreateContact()[pri:0, instance:com.winconnect.ContactTest@7f1302d6]" started-at="2026-03-30T17:06:11 IST" name="testCreateContact" finished-at="2026-03-30T17:06:21 IST" duration-ms="9417" status="FAIL">
-          <exception class="org.openqa.selenium.support.ui.UnexpectedTagNameException">
+        <test-method is-config="true" signature="preConditionFlow()[pri:0, instance:com.winconnect.SPService@159f197]" started-at="2026-04-06T20:57:25 IST" name="preConditionFlow" finished-at="2026-04-06T20:57:31 IST" duration-ms="5756" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- preConditionFlow -->
+        <test-method signature="verifyTheStatusFilterIsActiveByDefault()[pri:1, instance:com.winconnect.SPService@159f197]" started-at="2026-04-06T20:57:31 IST" name="verifyTheStatusFilterIsActiveByDefault" finished-at="2026-04-06T20:57:31 IST" duration-ms="26" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyTheStatusFilterIsActiveByDefault -->
+        <test-method signature="serviceEditValueCapture()[pri:2, instance:com.winconnect.SPService@159f197]" started-at="2026-04-06T20:57:31 IST" name="serviceEditValueCapture" finished-at="2026-04-06T20:57:43 IST" duration-ms="11866" status="FAIL">
+          <exception class="org.openqa.selenium.NoSuchElementException">
             <message>
-              <![CDATA[Element should have been "select" but was "button"
+              <![CDATA[no such element: Unable to locate element: {"method":"xpath","selector":"(//div[text()='Mold Test']/parent::td/following-sibling::td//span)[4]"}
+  (Session info: chrome=146.0.7680.178)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
 Build info: version: '4.21.0', revision: '79ed462ef4'
-System info: os.name: 'Mac OS X', os.arch: 'aarch64', os.version: '15.5', java.version: '21.0.6'
-Driver info: driver.version: unknown]]>
+System info: os.name: 'Mac OS X', os.arch: 'aarch64', os.version: '26.3.1', java.version: '23.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [7dfead87f401c0f864a707cdfb98e42a, findElement {value=(//div[text()='Mold Test']/parent::td/following-sibling::td//span)[4], using=xpath}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.178, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: /var/folders/jq/v_47v_rs2n1...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54001}, goog:processID: 85678, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: mac, proxy: Proxy(), se:cdp: ws://localhost:54001/devtoo..., se:cdpVersion: 146.0.7680.178, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 7dfead87f401c0f864a707cdfb98e42a]]>
             </message>
             <full-stacktrace>
-              <![CDATA[org.openqa.selenium.support.ui.UnexpectedTagNameException: Element should have been "select" but was "button"
+              <![CDATA[org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"xpath","selector":"(//div[text()='Mold Test']/parent::td/following-sibling::td//span)[4]"}
+  (Session info: chrome=146.0.7680.178)
+For documentation on this error, please visit: https://www.selenium.dev/documentation/webdriver/troubleshooting/errors#no-such-element-exception
 Build info: version: '4.21.0', revision: '79ed462ef4'
-System info: os.name: 'Mac OS X', os.arch: 'aarch64', os.version: '15.5', java.version: '21.0.6'
-Driver info: driver.version: unknown
-at org.openqa.selenium.support.ui.Select.<init>(Select.java:46)
-at com.winconnect.Contacts.ContactPage.enterContactType(ContactPage.java:65)
-at com.winconnect.Contacts.ContactActions.createContact(ContactActions.java:26)
-at com.winconnect.ContactTest.testCreateContact(ContactTest.java:32)
+System info: os.name: 'Mac OS X', os.arch: 'aarch64', os.version: '26.3.1', java.version: '23.0.2'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [7dfead87f401c0f864a707cdfb98e42a, findElement {value=(//div[text()='Mold Test']/parent::td/following-sibling::td//span)[4], using=xpath}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 146.0.7680.178, chrome: {chromedriverVersion: 146.0.7680.165 (4b989da09e1..., userDataDir: /var/folders/jq/v_47v_rs2n1...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54001}, goog:processID: 85678, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: mac, proxy: Proxy(), se:cdp: ws://localhost:54001/devtoo..., se:cdpVersion: 146.0.7680.178, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 7dfead87f401c0f864a707cdfb98e42a
+at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:501)
+at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:485)
+at org.openqa.selenium.remote.ErrorCodec.decode(ErrorCodec.java:167)
+at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:138)
+at org.openqa.selenium.remote.codec.w3c.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:50)
+at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:190)
+at org.openqa.selenium.remote.service.DriverCommandExecutor.invokeExecute(DriverCommandExecutor.java:216)
+at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:174)
+at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:518)
+at org.openqa.selenium.remote.ElementLocation$ElementFinder$2.findElement(ElementLocation.java:165)
+at org.openqa.selenium.remote.ElementLocation.findElement(ElementLocation.java:59)
+at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:355)
+at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:349)
+at com.winconnect.SPService.serviceEditValueCapture(SPService.java:269)
 at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
@@ -38,7 +67,7 @@ at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInv
 at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
 at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
 at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)
 at org.testng.TestRunner.privateRun(TestRunner.java:739)
 at org.testng.TestRunner.run(TestRunner.java:614)
 at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
@@ -61,11 +90,11 @@ at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
 at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
 ]]>
             </full-stacktrace>
-          </exception> <!-- org.openqa.selenium.support.ui.UnexpectedTagNameException -->
+          </exception> <!-- org.openqa.selenium.NoSuchElementException -->
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testCreateContact -->
-      </class> <!-- com.winconnect.ContactTest -->
+        </test-method> <!-- serviceEditValueCapture -->
+      </class> <!-- com.winconnect.SPService -->
     </test> <!-- Surefire test -->
   </suite> <!-- Surefire suite -->
 </testng-results>

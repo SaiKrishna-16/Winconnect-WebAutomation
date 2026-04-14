@@ -3,12 +3,13 @@
 <suite name="Failed suite [Surefire suite]" verbose="0">
   <test thread-count="5" name="Surefire test(failed)" verbose="0">
     <classes>
-      <class name="com.winconnect.ContactTest">
+      <class name="com.winconnect.SPService">
         <methods>
-          <include name="testCreateContact"/>
+          <include name="preConditionFlow"/>
           <include name="setup"/>
+          <include name="serviceEditValueCapture"/>
         </methods>
-      </class> <!-- com.winconnect.ContactTest -->
+      </class> <!-- com.winconnect.SPService -->
     </classes>
   </test> <!-- Surefire test(failed) -->
 </suite> <!-- Failed suite [Surefire suite] -->

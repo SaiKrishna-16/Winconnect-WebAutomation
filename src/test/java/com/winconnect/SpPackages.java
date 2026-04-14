@@ -51,7 +51,7 @@ public void preConditionFlow() {
     driver.findElement(By.xpath("(//input[@type='number'])[3]")).sendKeys("9");
 
     driver.findElement(By.xpath("//label[text()='Enter Username/Email']/following-sibling::input"))
-            .sendKeys("bvierra@wini.com");
+            .sendKeys("rvierra");
 
     driver.findElement(By.xpath("//input[@type='password']")).sendKeys("Admin@123");
 
@@ -164,7 +164,7 @@ public void preConditionFlow() {
 
     ((JavascriptExecutor) driver).executeScript(
             "const element = arguments[0];" +
-                    "const value = '54';" +
+                    "const value = '40';" +
                     "const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;" +
                     "nativeInputValueSetter.call(element, value);" +
                     "element.dispatchEvent(new Event('input', { bubbles: true }));",
@@ -651,7 +651,7 @@ String finalPrice = wait.until(driver -> {
 public void createPackageWithServicesAndPercentageValidation() throws Exception {
 
     String state = "AK";   // COMMON VARIABLE FOR STATE
-    String packageNameOption = "HMC Essential Plus";
+    String packageNameOption = "Premium Plus";
 
     // ---------- CLICK CREATE PACKAGE ----------
     WebElement createPackageBtn = wait.until(ExpectedConditions.elementToBeClickable(
@@ -828,7 +828,7 @@ public void createPackageWithServicesAndPercentageValidation() throws Exception 
                     + normalizedPopup + " | Table Price: " + normalizedTable
     );
 
-    System.out.println(" Package created and pricing matched successfully");
+    System.out.println(" Package created and pricing matched successfull");
 }
 
 }
